@@ -1,13 +1,10 @@
-// Import the functions you need from the SDKs you need
+// src/firebaseconfig.js
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getDatabase, ref, push, set, onValue, remove } from "firebase/database";  // Importa Realtime Database
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAhx86TvdGo7EyeJRXJjHidpnA5YB1vg8M",
+  apiKey: "AIzaSy...",
   authDomain: "wedding-f397b.firebaseapp.com",
   databaseURL: "https://wedding-f397b-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "wedding-f397b",
@@ -19,4 +16,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const database = getDatabase(app);  // Inizializza Realtime Database
+
+export { database, ref, push, set, onValue, remove };  // Esporta le funzioni necessarie
