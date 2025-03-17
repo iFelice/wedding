@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { database, ref, push, set } from './firebase'; // Importa Firebase
+import { database, ref, push, set } from '../src/firebaseconfig';
 import { v4 as uuidv4 } from 'uuid'; // Importa UUID
 
 function UploadForm() {

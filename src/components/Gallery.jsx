@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { database, ref, onValue, remove } from './firebase'; // Importa Firebase
+import { database, ref, onValue, remove } from '../src/firebaseconfig';
 
 function Gallery() {
     const [media, setMedia] = useState([]);
