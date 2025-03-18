@@ -1,6 +1,7 @@
+// UploadForm.jsx
 import React, { useState, useEffect } from 'react';
-import { database, ref, push, set } from '../firebaseconfig.js';
-import { v4 as uuidv4 } from 'uuid'; // Importa UUID
+import { database, ref, push } from '../firebaseconfig.js';
+import { v4 as uuidv4 } from 'uuid';
 
 function UploadForm() {
     const [files, setFiles] = useState([]);
@@ -8,7 +9,6 @@ function UploadForm() {
     const [progress, setProgress] = useState(0);
     const [userName, setUserName] = useState('');
 
-    // Controllo variabili d'ambiente all'avvio
     useEffect(() => {
         console.log('Variabili disponibili:', import.meta.env);
         console.log('Cloud name:', import.meta.env.VITE_CLOUDINARY_CLOUD_NAME);
@@ -27,6 +27,9 @@ function UploadForm() {
             formData.append('file', file);
             formData.append('upload_preset', uploadPreset);
             formData.append('tags', userName);
+
+            // Aggiungi le trasformazioni di upload
+            formData.append('transformation', 'f_auto,q_auto'); // f_auto = format auto, q_auto = quality auto
 
             xhr.upload.onprogress = (e) => {
                 if (e.lengthComputable) {
@@ -92,7 +95,7 @@ function UploadForm() {
                     file.type.startsWith('video/') ? 'video' : 'unknown';
 
                 const mediaData = {
-                    id: uuidv4(),  // Usa UUID per ID univoci
+                    id: uuidv4(),
                     url: data.secure_url,
                     userName: userName,
                     timestamp: new Date().toISOString(),
@@ -100,9 +103,8 @@ function UploadForm() {
                     color: '#' + Math.floor(Math.random() * 16777215).toString(16)
                 };
 
-                // Salva su Firebase Realtime Database
-                const mediaListRef = ref(database, 'media');  // riferimento al nodo 'media'
-                push(mediaListRef, mediaData); // Aggiunge i dati al database con un ID univoco generato da Firebase
+                const mediaListRef = ref(database, 'media');
+                push(mediaListRef, mediaData);
 
                 uploadedCount++;
                 setProgress(Math.round((uploadedCount / totalFiles) * 100));
