@@ -16,7 +16,13 @@ function UploadForm() {
     }, []);
 
     const handleFileChange = (e) => {
-        setFiles(Array.from(e.target.files));
+        const selectedFiles = Array.from(e.target.files);
+        setFiles(selectedFiles);
+
+        selectedFiles.forEach(file => {
+            console.log('Nome file:', file.name);
+            console.log('Tipo file:', file.type);
+        });
     };
 
     const uploadFileWithProgress = (file, cloudName, uploadPreset, userName) => {
@@ -24,12 +30,10 @@ function UploadForm() {
             const xhr = new XMLHttpRequest();
             const formData = new FormData();
 
-            formData.append('file', file);
+            formData.append('file', file, file.name); // Includi il nome del file
             formData.append('upload_preset', uploadPreset);
             formData.append('tags', userName);
-
-            // Aggiungi le trasformazioni di upload
-            formData.append('transformation', 'f_auto,q_auto:best'); // f_auto = format auto, q_auto = quality auto
+            formData.append('transformation', 'f_auto,q_auto:best');
 
             xhr.upload.onprogress = (e) => {
                 if (e.lengthComputable) {
@@ -41,7 +45,7 @@ function UploadForm() {
             xhr.onload = () => {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
-                    console.log(response); // Aggiungi questa riga per vedere la risposta di Cloudinary
+                    console.log(response);
                     resolve(response);
                 } else {
                     reject(new Error('Errore durante l\'upload'));
