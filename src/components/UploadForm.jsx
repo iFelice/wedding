@@ -29,7 +29,7 @@ function UploadForm() {
             formData.append('tags', userName);
 
             // Aggiungi le trasformazioni di upload
-            formData.append('transformation', 'f_auto,q_auto'); // f_auto = format auto, q_auto = quality auto
+            formData.append('transformation', 'f_auto,q_auto:best'); // f_auto = format auto, q_auto = quality auto
 
             xhr.upload.onprogress = (e) => {
                 if (e.lengthComputable) {
@@ -41,6 +41,7 @@ function UploadForm() {
             xhr.onload = () => {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
+                    console.log(response); // Aggiungi questa riga per vedere la risposta di Cloudinary
                     resolve(response);
                 } else {
                     reject(new Error('Errore durante l\'upload'));
