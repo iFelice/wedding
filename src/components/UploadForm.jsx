@@ -33,7 +33,7 @@ function UploadForm() {
             formData.append('file', file, file.name); // Includi il nome del file
             formData.append('upload_preset', uploadPreset);
             formData.append('tags', userName);
-            formData.append('transformation', 'f_auto,q_auto:best');
+            //RIMUOVI QUESTA RIGA formData.append('transformation', 'f_auto,q_auto:best');
 
             xhr.upload.onprogress = (e) => {
                 if (e.lengthComputable) {
