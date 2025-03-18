@@ -96,7 +96,7 @@ function Gallery() {
                                 </div>
                             ) : (
                                 <div className="thumbnail">
-                                    <img src={item.url} alt={`Immagine di ${item.userName || 'Ospite'}`} />
+                                    <img src={`${item.url}?tr=q_auto,f_auto`} alt={`Immagine di ${item.userName || 'Ospite'}`} />
                                 </div>
                             ))}
                             {!item.url && (
